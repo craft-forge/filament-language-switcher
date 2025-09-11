@@ -1,0 +1,47 @@
+{
+    "name": "craft-forge/filament-language-switcher",
+    "description": "Zero-config language switcher for Filament admin panels. Automatically scans available translations, renders dropdown with country flags, persists selection via sessions.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "filament",
+        "language",
+        "localization",
+        "i18n",
+        "switcher",
+        "admin"
+    ],
+    "homepage": "https://github.com/craft-forge/filament-language-switcher",
+    "authors": [
+        {
+            "name": "Taras Koval",
+            "email": "taraskovaldev@gmail.com",
+            "homepage": "https://github.com/taras-koval"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/craft-forge/filament-language-switcher/issues",
+        "source": "https://github.com/craft-forge/filament-language-switcher"
+    },
+    "require": {
+        "php": "^8.1",
+        "filament/filament": "^3.0|^4.0",
+        "spatie/laravel-package-tools": "^1.16",
+        "stijnvanouplines/blade-country-flags": "^1.0.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "CraftForge\\FilamentLanguageSwitcher\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CraftForge\\FilamentLanguageSwitcher\\FilamentLanguageSwitcherServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
