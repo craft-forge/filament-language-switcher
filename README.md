@@ -10,7 +10,7 @@ A simple and elegant language switcher plugin for Filament admin panels. Automat
 
 | Plugin Version | Filament Version | PHP Version |
 |----------------|------------------|-------------|
-| 1.x            | 3.x, 4.x         | \> 8.1      |
+| 1.x            | 3.x, 4.x, 5.x         | \> 8.1      |
 
 Install the package via Composer:
 
