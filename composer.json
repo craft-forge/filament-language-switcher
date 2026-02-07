@@ -30,9 +30,18 @@
         "spatie/laravel-package-tools": "^1.16",
         "stijnvanouplines/blade-country-flags": "^1.0.6"
     },
+    "require-dev": {
+        "orchestra/testbench": "^9.0",
+        "phpunit/phpunit": "^11.5.3"
+    },
     "autoload": {
         "psr-4": {
             "CraftForge\\FilamentLanguageSwitcher\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CraftForge\\FilamentLanguageSwitcher\\Tests\\": "tests/"
         }
     },
     "extra": {

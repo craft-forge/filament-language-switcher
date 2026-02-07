@@ -24,3 +24,5 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
+
+pint.json

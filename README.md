@@ -10,25 +10,22 @@ A simple and elegant language switcher plugin for Filament admin panels. Automat
 
 | Plugin Version | Filament Version | PHP Version |
 |----------------|------------------|-------------|
-| 1.x            | 3.x, 4.x, 5.x         | \> 8.1      |
+| 1.x            | 3.x, 4.x, 5.x    | \> 8.1      |
 
-Install the package via Composer:
+**1. Install the package via Composer:**
 
 ```bash
 composer require craft-forge/filament-language-switcher
 ```
 
-## Usage
-Register the plugin in your Filament panel configuration: (e.g.  `AdminPanelProvider`).
+**2. Register the plugin in your Filament panel configuration (e.g. `AdminPanelProvider`):**
 
 ```php
 use CraftForge\FilamentLanguageSwitcher\FilamentLanguageSwitcherPlugin;
-use Filament\Panel;
 
 public function panel(Panel $panel): Panel
 {
     return $panel
-        // ...
         ->plugins([
             FilamentLanguageSwitcherPlugin::make(),
         ]);
@@ -43,23 +40,28 @@ Define your own language list instead of auto-detection:
 
 ```php
 FilamentLanguageSwitcherPlugin::make()
-    ->locales([
-        ['code' => 'en', 'name' => 'English', 'flag' => 'gb'],
-        ['code' => 'uk', 'name' => 'Українська', 'flag' => 'ua'],
-        ['code' => 'de', 'name' => 'Deutsch', 'flag' => 'de'],
-    ])
+    ->locales(['en', 'fr', 'de'])
 ```
-The `name` and `flag` parameters are optional. When omitted, the plugin automatically generates them from its built-in language dictionary:
+
+The plugin automatically resolves language names and flag icons from its built-in dictionary (200+ languages including regional variants). For full control over names and flags, pass an array of arrays:
+
 ```php
 FilamentLanguageSwitcherPlugin::make()
     ->locales([
-        ['code' => 'en', 'flag' => 'us'],
-        ['code' => 'fr'],
-        ['code' => 'de'],
+        ['code' => 'en', 'name' => 'English', 'flag' => 'us'],
+        ['code' => 'fr', 'name' => 'Français', 'flag' => 'fr'],
+        ['code' => 'de', 'name' => 'Deutsch', 'flag' => 'de'],
     ])
 ```
 
-For flag codes, please refer to https://flagicons.lipis.dev (e.g., pl for Poland).
+For flag codes, please refer to https://flagicons.lipis.dev.
+
+You can also pass a Closure to load languages dynamically (e.g. from a database):
+
+```php
+FilamentLanguageSwitcherPlugin::make()
+    ->locales(fn () => Language::pluck('code')->toArray())
+```
 
 ![Language Switcher Custom Languages](.github/language-switcher-custom-languages.png)
 

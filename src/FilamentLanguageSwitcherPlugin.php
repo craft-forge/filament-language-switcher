@@ -2,6 +2,7 @@
 
 namespace CraftForge\FilamentLanguageSwitcher;
 
+use Closure;
 use CraftForge\FilamentLanguageSwitcher\Http\Middleware\SetLocale;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
@@ -11,7 +12,7 @@ use Illuminate\View\View;
 
 class FilamentLanguageSwitcherPlugin implements Plugin
 {
-    protected array $locales = [];
+    protected array|Closure $locales = [];
     protected bool $showFlags = true;
     protected string $renderHook = PanelsRenderHook::USER_MENU_BEFORE;
 
@@ -25,7 +26,7 @@ class FilamentLanguageSwitcherPlugin implements Plugin
         return new static();
     }
 
-    public function locales(array $locales): static
+    public function locales(array|Closure $locales): static
     {
         $this->locales = $locales;
         return $this;
@@ -72,8 +73,16 @@ class FilamentLanguageSwitcherPlugin implements Plugin
 
     protected function getLocales(): array
     {
-        if (!empty($this->locales)) {
+        $locales = $this->locales instanceof Closure
+            ? call_user_func($this->locales)
+            : $this->locales;
+
+        if (!empty($locales)) {
             return array_map(function ($locale) {
+                if (is_string($locale)) {
+                    $locale = ['code' => $locale];
+                }
+
                 if (!isset($locale['name'])) {
                     $locale['name'] = $this->getLanguageName($locale['code']);
                 }
@@ -83,7 +92,7 @@ class FilamentLanguageSwitcherPlugin implements Plugin
                 }
 
                 return $locale;
-            }, $this->locales);
+            }, $locales);
         }
 
         return $this->getFilamentLocales();
