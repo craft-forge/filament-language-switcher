@@ -54,9 +54,9 @@ FilamentLanguageSwitcherPlugin::make()
     ])
 ```
 
-For flag codes, please refer to https://flagicons.lipis.dev.
+Flag codes reference: https://flagicons.lipis.dev.
 
-You can also pass a Closure to load languages dynamically (e.g. from a database):
+Alternatively, pass a Closure to load languages dynamically (e.g. from a database):
 
 ```php
 FilamentLanguageSwitcherPlugin::make()
@@ -94,7 +94,7 @@ FilamentLanguageSwitcherPlugin::make()
 ![Language Switcher without Flags](.github/language-switcher-without-flags.jpg)
 
 ### Custom Render Hook
-Change where the language switcher appears in your panel:
+Change where the language switcher appears in the panel:
 ```php
 use Filament\View\PanelsRenderHook;
 
@@ -124,19 +124,18 @@ use CraftForge\FilamentLanguageSwitcher\Events\LocaleChanged;
 use Illuminate\Support\Facades\Event;
 
 Event::listen(LocaleChanged::class, function (LocaleChanged $event) {
-    auth()->user()->update(['preferred_locale' => $event->newLocale]);
-
-    Log::info("Locale changed from {$event->oldLocale} to {$event->newLocale}");
+    // auth()->user()->update(['preferred_locale' => $event->newLocale]);
+    // Log::info("Locale changed from {$event->oldLocale} to {$event->newLocale}");
 });
 ```
 
 ### JavaScript
 
-A `filament-locale-changed` browser event is dispatched after the page reloads:
+A `filament-locale-changed` browser event is dispatched after the page reloads following a locale change:
 
 ```js
 window.addEventListener('filament-locale-changed', (e) => {
-    console.log('Locale changed from', e.detail.oldLocale, 'to', e.detail.newLocale);
+    // console.log('Locale changed from', e.detail.oldLocale, 'to', e.detail.newLocale);
 });
 ```
 
