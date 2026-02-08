@@ -65,8 +65,15 @@ FilamentLanguageSwitcherPlugin::make()
 
 ![Language Switcher Custom Languages](.github/language-switcher-custom-languages.png)
 
+### Show on Auth Pages
+Display the language switcher on login, register, and password reset pages:
+```php
+FilamentLanguageSwitcherPlugin::make()
+    ->showOnAuthPages()
+```
+
 ### Hide Flags
-Display only language codes and names without flag icons:
+Display only language names without flag icons:
 ```php
 FilamentLanguageSwitcherPlugin::make()
     ->showFlags(false)

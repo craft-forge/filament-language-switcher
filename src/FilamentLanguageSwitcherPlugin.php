@@ -14,6 +14,7 @@ class FilamentLanguageSwitcherPlugin implements Plugin
 {
     protected array|Closure $locales = [];
     protected bool $showFlags = true;
+    protected bool $showOnAuthPages = false;
     protected string $renderHook = PanelsRenderHook::USER_MENU_BEFORE;
 
     public function getId(): string
@@ -38,6 +39,12 @@ class FilamentLanguageSwitcherPlugin implements Plugin
         return $this;
     }
 
+    public function showOnAuthPages(bool $show = true): static
+    {
+        $this->showOnAuthPages = $show;
+        return $this;
+    }
+
     public function renderHook(string $hook): static
     {
         $this->renderHook = $hook;
@@ -48,22 +55,41 @@ class FilamentLanguageSwitcherPlugin implements Plugin
     {
         $panel->renderHook(
             name: $this->renderHook,
-            hook: function (): View {
-                $locales = $this->getLocales();
-                $currentLocale = app()->getLocale();
-                $currentLanguage = collect($locales)->firstWhere('code', $currentLocale);
-                $otherLanguages = $locales;
-                $showFlags = $this->showFlags;
-
-                return view('filament-language-switcher::language-switcher', compact(
-                    'otherLanguages',
-                    'currentLanguage',
-                    'showFlags',
-                ));
-            }
+            hook: fn (): View => $this->renderLanguageSwitcher(),
         );
 
+        if ($this->showOnAuthPages) {
+            $authHooks = [
+                PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
+                PanelsRenderHook::AUTH_REGISTER_FORM_AFTER,
+                PanelsRenderHook::AUTH_PASSWORD_RESET_REQUEST_FORM_AFTER,
+            ];
+
+            foreach ($authHooks as $authHook) {
+                $panel->renderHook(
+                    name: $authHook,
+                    hook: fn (): View => $this->renderLanguageSwitcher(floating: true),
+                );
+            }
+        }
+
         $panel->middleware([SetLocale::class], isPersistent: true);
+    }
+
+    protected function renderLanguageSwitcher(bool $floating = false): View
+    {
+        $locales = $this->getLocales();
+        $currentLocale = app()->getLocale();
+        $currentLanguage = collect($locales)->firstWhere('code', $currentLocale);
+        $otherLanguages = $locales;
+        $showFlags = $this->showFlags;
+
+        return view('filament-language-switcher::language-switcher', compact(
+            'otherLanguages',
+            'currentLanguage',
+            'showFlags',
+            'floating',
+        ));
     }
 
     public function boot(Panel $panel): void

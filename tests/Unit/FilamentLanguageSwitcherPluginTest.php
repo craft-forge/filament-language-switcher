@@ -5,14 +5,13 @@ namespace CraftForge\FilamentLanguageSwitcher\Tests\Unit;
 use CraftForge\FilamentLanguageSwitcher\FilamentLanguageSwitcherPlugin;
 use CraftForge\FilamentLanguageSwitcher\Tests\TestCase;
 use ReflectionMethod;
+use ReflectionProperty;
 
 class FilamentLanguageSwitcherPluginTest extends TestCase
 {
     protected function callGetLocales(FilamentLanguageSwitcherPlugin $plugin): array
     {
-        $method = new ReflectionMethod($plugin, 'getLocales');
-
-        return $method->invoke($plugin);
+        return (new ReflectionMethod($plugin, 'getLocales'))->invoke($plugin);
     }
 
     public function test_locales_accepts_array(): void
@@ -202,6 +201,45 @@ class FilamentLanguageSwitcherPluginTest extends TestCase
         $this->assertSame($plugin, $result);
 
         $result = $plugin->showFlags(false);
+        $this->assertSame($plugin, $result);
+    }
+
+    public function test_show_on_auth_pages_defaults_to_false(): void
+    {
+        $plugin = FilamentLanguageSwitcherPlugin::make();
+
+        $property = new ReflectionProperty($plugin, 'showOnAuthPages');
+
+        $this->assertFalse($property->getValue($plugin));
+    }
+
+    public function test_show_on_auth_pages_can_be_enabled(): void
+    {
+        $plugin = FilamentLanguageSwitcherPlugin::make()
+            ->showOnAuthPages();
+
+        $property = new ReflectionProperty($plugin, 'showOnAuthPages');
+
+        $this->assertTrue($property->getValue($plugin));
+    }
+
+    public function test_show_on_auth_pages_can_be_disabled(): void
+    {
+        $plugin = FilamentLanguageSwitcherPlugin::make()
+            ->showOnAuthPages()
+            ->showOnAuthPages(false);
+
+        $property = new ReflectionProperty($plugin, 'showOnAuthPages');
+
+        $this->assertFalse($property->getValue($plugin));
+    }
+
+    public function test_show_on_auth_pages_returns_fluent_instance(): void
+    {
+        $plugin = FilamentLanguageSwitcherPlugin::make();
+
+        $result = $plugin->showOnAuthPages();
+
         $this->assertSame($plugin, $result);
     }
 }
