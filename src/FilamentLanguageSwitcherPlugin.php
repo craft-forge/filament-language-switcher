@@ -12,6 +12,8 @@ use Illuminate\View\View;
 
 class FilamentLanguageSwitcherPlugin implements Plugin
 {
+    protected static ?int $rememberLocaleDays = null;
+
     protected array|Closure $locales = [];
     protected bool $showFlags = true;
     protected bool $showOnAuthPages = false;
@@ -45,6 +47,16 @@ class FilamentLanguageSwitcherPlugin implements Plugin
         return $this;
     }
 
+    /**
+     * Remember the selected locale in a cookie.
+     * Call without arguments to store forever, or specify the number of days.
+     */
+    public function rememberLocale(?int $days = null): static
+    {
+        static::$rememberLocaleDays = $days ?? 0;
+        return $this;
+    }
+
     public function renderHook(string $hook): static
     {
         $this->renderHook = $hook;
@@ -74,6 +86,11 @@ class FilamentLanguageSwitcherPlugin implements Plugin
         }
 
         $panel->middleware([SetLocale::class], isPersistent: true);
+    }
+
+    public static function getRememberLocaleDays(): ?int
+    {
+        return static::$rememberLocaleDays;
     }
 
     protected function renderLanguageSwitcher(bool $floating = false): View

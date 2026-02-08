@@ -13,7 +13,14 @@ class SetLocale
         $locale = config('app.locale', 'en');
 
         if ($request->hasSession()) {
-            $locale = $request->session()->get('locale', $locale);
+            $sessionLocale = $request->session()->get('locale');
+
+            if ($sessionLocale) {
+                $locale = $sessionLocale;
+            } elseif ($cookieLocale = $request->cookie('filament_language_switcher_locale')) {
+                $locale = $cookieLocale;
+                $request->session()->put('locale', $locale);
+            }
         }
 
         App::setLocale($locale);

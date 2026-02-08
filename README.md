@@ -72,6 +72,13 @@ FilamentLanguageSwitcherPlugin::make()
     ->showOnAuthPages()
 ```
 
+### Remember Locale
+Store the selected locale in a cookie to persist across browser sessions:
+```php
+FilamentLanguageSwitcherPlugin::make()
+    ->rememberLocale(days: 30)
+```
+
 ### Hide Flags
 Display only language names without flag icons:
 ```php
