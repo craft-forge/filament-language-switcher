@@ -115,6 +115,8 @@ All available render hooks: [https://filamentphp.com/docs/5.x/advanced/render-ho
 
 ## Events
 
+### PHP
+
 The plugin dispatches a `LocaleChanged` event whenever a user switches locale, providing both the new and previous locale:
 
 ```php
@@ -125,6 +127,16 @@ Event::listen(LocaleChanged::class, function (LocaleChanged $event) {
     auth()->user()->update(['preferred_locale' => $event->newLocale]);
 
     Log::info("Locale changed from {$event->oldLocale} to {$event->newLocale}");
+});
+```
+
+### JavaScript
+
+A `filament-locale-changed` browser event is dispatched after the page reloads:
+
+```js
+window.addEventListener('filament-locale-changed', (e) => {
+    console.log('Locale changed from', e.detail.oldLocale, 'to', e.detail.newLocale);
 });
 ```
 

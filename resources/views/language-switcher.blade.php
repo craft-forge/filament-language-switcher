@@ -58,3 +58,17 @@
         </x-filament::dropdown.list>
     </x-filament::dropdown>
 </div>
+
+@if(session('filament-locale-changed'))
+@php $localeEvent = session('filament-locale-changed'); @endphp
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        window.dispatchEvent(new CustomEvent('filament-locale-changed', {
+            detail: {
+                newLocale: '{{ $localeEvent['newLocale'] }}',
+                oldLocale: '{{ $localeEvent['oldLocale'] }}'
+            }
+        }));
+    });
+</script>
+@endif
