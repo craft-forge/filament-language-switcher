@@ -4,6 +4,7 @@ namespace CraftForge\FilamentLanguageSwitcher\Tests\Unit;
 
 use CraftForge\FilamentLanguageSwitcher\FilamentLanguageSwitcherPlugin;
 use CraftForge\FilamentLanguageSwitcher\Tests\TestCase;
+use InvalidArgumentException;
 use ReflectionMethod;
 use ReflectionProperty;
 
@@ -241,5 +242,44 @@ class FilamentLanguageSwitcherPluginTest extends TestCase
         $result = $plugin->showOnAuthPages();
 
         $this->assertSame($plugin, $result);
+    }
+
+    public function test_locales_with_comma_separated_string_throws_exception(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid locale code 'en, pl'");
+
+        $plugin = FilamentLanguageSwitcherPlugin::make()
+            ->locales(['en, pl']);
+
+        $method = new ReflectionMethod($plugin, 'getLocales');
+        $method->invoke($plugin);
+    }
+
+    public function test_locales_with_invalid_characters_throws_exception(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid locale code '123'");
+
+        $plugin = FilamentLanguageSwitcherPlugin::make()
+            ->locales(['123']);
+
+        $method = new ReflectionMethod($plugin, 'getLocales');
+        $method->invoke($plugin);
+    }
+
+    public function test_valid_string_locales_do_not_throw_exception(): void
+    {
+        $plugin = FilamentLanguageSwitcherPlugin::make()
+            ->locales(['en', 'pl', 'pt_BR', 'ckb']);
+
+        $method = new ReflectionMethod($plugin, 'getLocales');
+        $locales = $method->invoke($plugin);
+
+        $this->assertCount(4, $locales);
+        $this->assertEquals('en', $locales[0]['code']);
+        $this->assertEquals('pl', $locales[1]['code']);
+        $this->assertEquals('pt_BR', $locales[2]['code']);
+        $this->assertEquals('ckb', $locales[3]['code']);
     }
 }

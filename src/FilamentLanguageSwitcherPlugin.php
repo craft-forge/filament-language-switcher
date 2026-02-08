@@ -9,6 +9,7 @@ use Filament\Panel;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
+use InvalidArgumentException;
 
 class FilamentLanguageSwitcherPlugin implements Plugin
 {
@@ -123,6 +124,12 @@ class FilamentLanguageSwitcherPlugin implements Plugin
         if (!empty($locales)) {
             return array_map(function ($locale) {
                 if (is_string($locale)) {
+                    if (! preg_match('/^[a-zA-Z]{2,3}(_[a-zA-Z]{2,4})?$/', $locale)) {
+                        throw new InvalidArgumentException(
+                            "Invalid locale code '$locale'. Expected a valid locale (e.g. 'en', 'pt_BR').",
+                        );
+                    }
+
                     $locale = ['code' => $locale];
                 }
 

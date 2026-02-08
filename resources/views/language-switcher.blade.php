@@ -4,7 +4,17 @@
             @if (isset($currentLanguage) && $showFlags)
                 <x-filament::link tag="button">
                     <div style="width: 2rem; height: 2rem; border-radius: 9999px; overflow: hidden;">
-                        {{ svg('flag-1x1-'.$currentLanguage['flag'], '') }}
+                        @php
+                            try {
+                                echo svg('flag-1x1-'.$currentLanguage['flag'], '')->toHtml();
+                                $flagFound = true;
+                            } catch (Exception) {
+                                $flagFound = false;
+                            }
+                        @endphp
+                        @unless ($flagFound)
+                            <x-filament::icon icon="heroicon-o-language" style="width: 2rem; height: 2rem;" />
+                        @endunless
                     </div>
                 </x-filament::link>
             @else
@@ -24,7 +34,17 @@
                     <span class="fi-dropdown-list-item-label" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 100%; text-align: left; display: flex; justify-content: flex-start; gap: 0.75rem;">
                         @if ($showFlags)
                             <div style="width: 1.5rem; height: 1.5rem; flex-shrink: 0;">
-                                {{ svg('flag-4x3-'.$language['flag'], '') }}
+                                @php
+                                    try {
+                                        echo svg('flag-4x3-'.$language['flag'], '')->toHtml();
+                                        $itemFlagFound = true;
+                                    } catch (Exception) {
+                                        $itemFlagFound = false;
+                                    }
+                                @endphp
+                                @unless ($itemFlagFound)
+                                    <x-filament::icon icon="heroicon-o-flag" style="width: 1.5rem; height: 1.5rem;" />
+                                @endunless
                             </div>
                             <span>{{ $language['name'] }}</span>
                         @else
