@@ -1,6 +1,6 @@
 # Filament Language Switcher
 
-A simple and elegant language switcher plugin for Filament admin panels. Automatically detects available Filament translations or allows custom language configuration with optional flag icons.
+A simple and elegant language switcher plugin for Filament admin panels. Automatically detects available Filament translations or allows custom language configuration with optional flag icons. Supports auth pages, cookie persistence, and locale change events.
 
 ![Language Switcher Demo](.github/language-switcher-demo.png)
 
@@ -65,26 +65,33 @@ FilamentLanguageSwitcherPlugin::make()
 
 ![Language Switcher Custom Languages](.github/language-switcher-custom-languages.png)
 
+### Remember Locale
+Store the selected locale in a cookie to persist across browser sessions (e.g. after logout):
+```php
+FilamentLanguageSwitcherPlugin::make()
+    ->rememberLocale()          // forever
+    ->rememberLocale(days: 30)  // for 30 days
+```
+
 ### Show on Auth Pages
+
 Display the language switcher on login, register, and password reset pages:
 ```php
 FilamentLanguageSwitcherPlugin::make()
     ->showOnAuthPages()
 ```
 
-### Remember Locale
-Store the selected locale in a cookie to persist across browser sessions:
-```php
-FilamentLanguageSwitcherPlugin::make()
-    ->rememberLocale(days: 30)
-```
+![Language Switcher on Auth Pages](.github/language-switcher-auth-page.jpg)
 
 ### Hide Flags
+
 Display only language names without flag icons:
 ```php
 FilamentLanguageSwitcherPlugin::make()
     ->showFlags(false)
 ```
+
+![Language Switcher without Flags](.github/language-switcher-without-flags.jpg)
 
 ### Custom Render Hook
 Change where the language switcher appears in your panel:
