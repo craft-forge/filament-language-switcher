@@ -28,7 +28,7 @@
                         <span>{{ $language['name'] }}</span>
                     @else
                         <span style="{{ $isCurrent ? 'font-weight: 600;' : '' }}">
-                            {{ str($language['code'])->upper()->value() . " - {$language['name']}" }}
+                            {{ $language['name'] }}
                         </span>
                     @endif
                 </span>

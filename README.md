@@ -71,7 +71,6 @@ Display only language codes and names without flag icons:
 FilamentLanguageSwitcherPlugin::make()
     ->showFlags(false)
 ```
-![Language Switcher with text-only display](.github/language-switcher-no-flags.png)
 
 ### Custom Render Hook
 Change where the language switcher appears in your panel:
