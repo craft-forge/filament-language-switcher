@@ -80,7 +80,7 @@ use Filament\View\PanelsRenderHook;
 FilamentLanguageSwitcherPlugin::make()
     ->renderHook(PanelsRenderHook::USER_MENU_PROFILE_AFTER)
 ```
-Available render hooks: https://filamentphp.com/docs/4.x/advanced/render-hooks#panel-builder-render-hooks
+Available render hooks: [https://filamentphp.com/docs/5.x/advanced/render-hooks](https://filamentphp.com/docs/5.x/advanced/render-hooks#available-render-hooks)
 
 ![Language Switcher Render Hook](.github/language-switcher-render-hook.png)
 
