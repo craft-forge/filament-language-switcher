@@ -80,9 +80,32 @@ use Filament\View\PanelsRenderHook;
 FilamentLanguageSwitcherPlugin::make()
     ->renderHook(PanelsRenderHook::USER_MENU_PROFILE_AFTER)
 ```
-Available render hooks: [https://filamentphp.com/docs/5.x/advanced/render-hooks](https://filamentphp.com/docs/5.x/advanced/render-hooks#available-render-hooks)
+
+Popular placements:
+- `USER_MENU_BEFORE` — before the user menu (default)
+- `USER_MENU_PROFILE_AFTER` — after user profile in dropdown
+- `USER_MENU_AFTER` — after the user menu
+- `SIDEBAR_FOOTER` — at the bottom of sidebar
+- `FOOTER` — in the page footer
+
+All available render hooks: [https://filamentphp.com/docs/5.x/advanced/render-hooks](https://filamentphp.com/docs/5.x/advanced/render-hooks#available-render-hooks)
 
 ![Language Switcher Render Hook](.github/language-switcher-render-hook.png)
+
+## Events
+
+The plugin dispatches a `LocaleChanged` event whenever a user switches locale, providing both the new and previous locale:
+
+```php
+use CraftForge\FilamentLanguageSwitcher\Events\LocaleChanged;
+use Illuminate\Support\Facades\Event;
+
+Event::listen(LocaleChanged::class, function (LocaleChanged $event) {
+    auth()->user()->update(['preferred_locale' => $event->newLocale]);
+
+    Log::info("Locale changed from {$event->oldLocale} to {$event->newLocale}");
+});
+```
 
 ## License
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
