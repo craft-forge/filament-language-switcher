@@ -73,26 +73,6 @@ FilamentLanguageSwitcherPlugin::make()
     ->rememberLocale(days: 30)  // for 30 days
 ```
 
-### Show on Auth Pages
-
-Display the language switcher on login, register, and password reset pages:
-```php
-FilamentLanguageSwitcherPlugin::make()
-    ->showOnAuthPages()
-```
-
-![Language Switcher on Auth Pages](.github/language-switcher-auth-page.jpg)
-
-### Hide Flags
-
-Display only language names without flag icons:
-```php
-FilamentLanguageSwitcherPlugin::make()
-    ->showFlags(false)
-```
-
-![Language Switcher without Flags](.github/language-switcher-without-flags.jpg)
-
 ### Custom Render Hook
 Change where the language switcher appears in the panel:
 ```php
@@ -112,6 +92,24 @@ Popular placements:
 All available render hooks: [https://filamentphp.com/docs/5.x/advanced/render-hooks](https://filamentphp.com/docs/5.x/advanced/render-hooks#available-render-hooks)
 
 ![Language Switcher Render Hook](.github/language-switcher-render-hook.png)
+
+### Show on Auth Pages
+
+Display the language switcher on login, register, and password reset pages:
+```php
+FilamentLanguageSwitcherPlugin::make()
+    ->showOnAuthPages()
+```
+
+![Language Switcher on Auth Pages](.github/language-switcher-auth-page.jpg)
+
+### Hide Flags
+
+Display only language names without flag icons:
+```php
+FilamentLanguageSwitcherPlugin::make()
+    ->showFlags(false)
+```
 
 ## Events
 
