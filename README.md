@@ -2,6 +2,8 @@
 
 A simple and elegant language switcher plugin for Filament admin panels. Automatically detects available Filament translations or allows custom language configuration with optional flag icons. Supports auth pages, cookie persistence, and locale change events.
 
+[**→ Live Demo**](https://craftforge.io/admin/translations)
+
 ![Language Switcher Demo](.github/language-switcher-demo.png)
 
 ![Language Switcher In Dark Mode](.github/language-switcher-dark-mode.png)
@@ -36,14 +38,14 @@ The plugin will automatically detect available Filament language files and displ
 
 ## Configuration
 ### Custom Languages
-Define your own language list instead of auto-detection:
+Define your own language list instead of auto-detection. Pass locale codes and the plugin resolves names and flags automatically from its built-in dictionary (200+ languages):
 
 ```php
 FilamentLanguageSwitcherPlugin::make()
     ->locales(['en', 'fr', 'de'])
 ```
 
-The plugin automatically resolves language names and flag icons from its built-in dictionary (200+ languages including regional variants). For full control over names and flags, pass an array of arrays:
+For full control over names and flags, pass an array of arrays. Flag codes reference: https://flagicons.lipis.dev.
 
 ```php
 FilamentLanguageSwitcherPlugin::make()
@@ -54,9 +56,7 @@ FilamentLanguageSwitcherPlugin::make()
     ])
 ```
 
-Flag codes reference: https://flagicons.lipis.dev.
-
-Alternatively, pass a Closure to load languages dynamically (e.g. from a database):
+To load languages dynamically (e.g. from a database), pass a Closure:
 
 ```php
 FilamentLanguageSwitcherPlugin::make()
