@@ -1,22 +1,20 @@
 <div @if($floating ?? false) style="position: fixed; top: 0.5rem; right: 1rem; z-index: 50;" @endif>
-    <x-filament::dropdown placement="bottom-start" maxHeight="36rem">
+    <x-filament::dropdown placement="bottom-end" maxHeight="36rem" teleport>
         <x-slot name="trigger" style="justify-self: center; align-self: center; padding: 0.5rem 0;">
             @if (isset($currentLanguage) && $showFlags)
-                <x-filament::link tag="button">
-                    <div style="width: 2rem; height: 2rem; border-radius: 9999px; overflow: hidden;">
-                        @php
-                            try {
-                                echo svg('flag-1x1-'.$currentLanguage['flag'], '')->toHtml();
-                                $flagFound = true;
-                            } catch (Exception) {
-                                $flagFound = false;
-                            }
-                        @endphp
-                        @unless ($flagFound)
-                            <x-filament::icon icon="heroicon-o-language" style="width: 2rem; height: 2rem;" />
-                        @endunless
-                    </div>
-                </x-filament::link>
+                <div style="width: 2rem; height: 2rem; border-radius: 9999px; overflow: hidden; cursor: pointer;">
+                    @php
+                        try {
+                            echo svg('flag-1x1-'.$currentLanguage['flag'], '')->toHtml();
+                            $flagFound = true;
+                        } catch (Exception) {
+                            $flagFound = false;
+                        }
+                    @endphp
+                    @unless ($flagFound)
+                        <x-filament::icon icon="heroicon-o-language" style="width: 2rem; height: 2rem;" />
+                    @endunless
+                </div>
             @else
                 <x-filament::icon-button icon="heroicon-o-language" label="Language switcher"/>
             @endif
