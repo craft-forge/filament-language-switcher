@@ -30,7 +30,7 @@
                         $isCurrent = $currentLanguage['code'] === $language['code'];
                     }
                 @endphp
-                <x-filament::dropdown.list.item :href="route('filament-language-switcher.switch', ['code' => $language['code']])" tag="a">
+                <x-filament::dropdown.list.item tag="button" x-on:click="close(); window.location.href = '{{ route('filament-language-switcher.switch', ['code' => $language['code']]) }}'">
                     <span class="fi-dropdown-list-item-label" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 100%; text-align: left; display: flex; justify-content: flex-start; gap: 0.75rem;">
                         @if ($showFlags)
                             <div style="width: 1.5rem; height: 1.5rem; flex-shrink: 0;">
