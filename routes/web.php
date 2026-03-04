@@ -22,11 +22,6 @@ Route::group(['middleware' => ['web']], static function () {
 
         event(new LocaleChanged(newLocale: $code, oldLocale: $oldLocale));
 
-        request()->session()->flash('filament-locale-changed', [
-            'newLocale' => $code,
-            'oldLocale' => $oldLocale,
-        ]);
-
         return redirect()->back();
     })->name('filament-language-switcher.switch');
 });

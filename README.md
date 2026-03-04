@@ -111,9 +111,7 @@ FilamentLanguageSwitcherPlugin::make()
     ->showFlags(false)
 ```
 
-## Events
-
-### PHP
+## Event
 
 The plugin dispatches a `LocaleChanged` event whenever a user switches locale, providing both the new and previous locale:
 
@@ -121,20 +119,13 @@ The plugin dispatches a `LocaleChanged` event whenever a user switches locale, p
 use CraftForge\FilamentLanguageSwitcher\Events\LocaleChanged;
 use Illuminate\Support\Facades\Event;
 
-Event::listen(LocaleChanged::class, function (LocaleChanged $event) {
-    // auth()->user()->update(['preferred_locale' => $event->newLocale]);
-    // Log::info("Locale changed from {$event->oldLocale} to {$event->newLocale}");
-});
-```
-
-### JavaScript
-
-A `filament-locale-changed` browser event is dispatched after the page reloads following a locale change:
-
-```js
-window.addEventListener('filament-locale-changed', (e) => {
-    // console.log('Locale changed from', e.detail.oldLocale, 'to', e.detail.newLocale);
-});
+public function boot(): void
+{
+    Event::listen(LocaleChanged::class, function (LocaleChanged $event) {
+        // auth()->user()->setLocale($event->newLocale);
+        // Log::info("Locale changed from {$event->oldLocale} to {$event->newLocale}");
+    });
+}
 ```
 
 ## License
