@@ -2,11 +2,13 @@
 
 A simple and elegant language switcher plugin for Filament admin panels. Automatically detects available Filament translations or allows custom language configuration with optional flag icons. Supports auth pages, cookie persistence, and locale change events.
 
-[**→ Live Demo**](https://craftforge.io/admin/translations)
-
 ![Language Switcher Demo](.github/language-switcher-demo.png)
 
 ![Language Switcher In Dark Mode](.github/language-switcher-dark-mode.png)
+
+## Demo
+
+[**→ Live Demo**](https://craftforge.io/admin/translations)
 
 ## Installation
 
@@ -37,15 +39,17 @@ public function panel(Panel $panel): Panel
 The plugin will automatically detect available Filament language files and display them in a dropdown menu.
 
 ## Configuration
-### Custom Languages
-Define your own language list instead of auto-detection. Pass locale codes and the plugin resolves names and flags automatically from its built-in dictionary (200+ languages):
+### Locales
+By default, the plugin auto-detects available Filament language files. To define the locale list manually, pass it to `locales()` - choose one of three formats:
+
+**Locale codes** - names and flags are resolved automatically from the built-in dictionary (200+ languages):
 
 ```php
 FilamentLanguageSwitcherPlugin::make()
     ->locales(['en', 'fr', 'de'])
 ```
 
-For full control over names and flags, pass an array of arrays. Flag codes reference: https://flagicons.lipis.dev.
+**Full control** - specify name and flag per locale. Flag codes reference: https://flagicons.lipis.dev.
 
 ```php
 FilamentLanguageSwitcherPlugin::make()
@@ -56,14 +60,14 @@ FilamentLanguageSwitcherPlugin::make()
     ])
 ```
 
-To load languages dynamically (e.g. from a database), pass a Closure:
+**Dynamic** - load locales at runtime (e.g. from a database):
 
 ```php
 FilamentLanguageSwitcherPlugin::make()
     ->locales(fn () => Language::pluck('code')->toArray())
 ```
 
-![Language Switcher Custom Languages](.github/language-switcher-custom-languages.png)
+![Language Switcher Locales](.github/language-switcher-custom-languages.png)
 
 ### Remember Locale
 Store the selected locale in a cookie to persist across browser sessions (e.g. after logout):
@@ -100,8 +104,6 @@ Display the language switcher on login, register, and password reset pages:
 FilamentLanguageSwitcherPlugin::make()
     ->showOnAuthPages()
 ```
-
-![Language Switcher on Auth Pages](.github/language-switcher-auth-page.jpg)
 
 ### Hide Flags
 
