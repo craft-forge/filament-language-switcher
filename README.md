@@ -115,6 +115,14 @@ FilamentLanguageSwitcherPlugin::make()
 
 Flag codes reference: https://flagicons.lipis.dev
 
+### Show Label
+
+Display the current language name next to the flag in the trigger button:
+```php
+FilamentLanguageSwitcherPlugin::make()
+    ->showLabel()
+```
+
 ### Hide Flags
 
 Display only language names without flag icons:
