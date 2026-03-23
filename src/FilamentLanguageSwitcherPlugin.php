@@ -19,6 +19,7 @@ class FilamentLanguageSwitcherPlugin implements Plugin
     protected bool $showFlags = true;
     protected bool $showLabel = false;
     protected bool $showOnAuthPages = false;
+    protected array $flagMapping = [];
     protected string $renderHook = PanelsRenderHook::USER_MENU_BEFORE;
 
     public function getId(): string
@@ -62,6 +63,16 @@ class FilamentLanguageSwitcherPlugin implements Plugin
     public function rememberLocale(?int $days = null): static
     {
         static::$rememberLocaleDays = $days ?? 0;
+        return $this;
+    }
+
+    /**
+     * Remap flag codes for specific locales.
+     * e.g. ['de' => 'ch'] will show the Swiss flag for the German locale.
+     */
+    public function flagMapping(array $mapping): static
+    {
+        $this->flagMapping = $mapping;
         return $this;
     }
 
@@ -150,6 +161,10 @@ class FilamentLanguageSwitcherPlugin implements Plugin
                     $locale['flag'] = $this->getCountryCode($locale['code']);
                 }
 
+                if (isset($this->flagMapping[$locale['code']])) {
+                    $locale['flag'] = $this->flagMapping[$locale['code']];
+                }
+
                 return $locale;
             }, $locales);
         }
@@ -176,10 +191,14 @@ class FilamentLanguageSwitcherPlugin implements Plugin
                 continue;
             }
 
+            $flag = isset($this->flagMapping[$localeCode])
+                ? $this->flagMapping[$localeCode]
+                : $this->getCountryCode($localeCode);
+
             $locales[] = [
                 'code' => $localeCode,
                 'name' => $this->getLanguageName($localeCode),
-                'flag' => $this->getCountryCode($localeCode),
+                'flag' => $flag,
             ];
         }
 
