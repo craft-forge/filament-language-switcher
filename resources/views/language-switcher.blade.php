@@ -1,19 +1,24 @@
 <div @if($floating ?? false) style="position: fixed; top: 0.5rem; right: 1rem; z-index: 50;" @endif>
     <x-filament::dropdown placement="bottom-end" maxHeight="36rem" teleport>
-        <x-slot name="trigger" style="justify-self: center; align-self: center; padding: 0.5rem 0;">
+        <x-slot name="trigger" style="justify-self: center; align-self: center;">
             @if (isset($currentLanguage) && $showFlags)
-                <div style="width: 2rem; height: 2rem; border-radius: 9999px; overflow: hidden; cursor: pointer;">
-                    @php
-                        try {
-                            echo svg('flag-1x1-'.$currentLanguage['flag'], '')->toHtml();
-                            $flagFound = true;
-                        } catch (Exception) {
-                            $flagFound = false;
-                        }
-                    @endphp
-                    @unless ($flagFound)
-                        <x-filament::icon icon="heroicon-o-language" style="width: 2rem; height: 2rem;" />
-                    @endunless
+                <div style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.25rem 0.5rem;">
+                    <div style="width: 1.5rem; height: 1.5rem; border-radius: 9999px; overflow: hidden; flex-shrink: 0;">
+                        @php
+                            try {
+                                echo svg('flag-1x1-'.$currentLanguage['flag'], '')->toHtml();
+                                $flagFound = true;
+                            } catch (Exception) {
+                                $flagFound = false;
+                            }
+                        @endphp
+                        @unless ($flagFound)
+                            <x-filament::icon icon="heroicon-o-language" style="width: 1.5rem; height: 1.5rem;" />
+                        @endunless
+                    </div>
+                    @if ($showLabel)
+                        <span style="font-size: 0.875rem;">{{ $currentLanguage['name'] }}</span>
+                    @endif
                 </div>
             @else
                 <x-filament::icon-button icon="heroicon-o-language" label="Language switcher"/>

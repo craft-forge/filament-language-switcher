@@ -17,6 +17,7 @@ class FilamentLanguageSwitcherPlugin implements Plugin
 
     protected array|Closure $locales = [];
     protected bool $showFlags = true;
+    protected bool $showLabel = false;
     protected bool $showOnAuthPages = false;
     protected string $renderHook = PanelsRenderHook::USER_MENU_BEFORE;
 
@@ -39,6 +40,12 @@ class FilamentLanguageSwitcherPlugin implements Plugin
     public function showFlags(bool $show = true): static
     {
         $this->showFlags = $show;
+        return $this;
+    }
+
+    public function showLabel(bool $show = true): static
+    {
+        $this->showLabel = $show;
         return $this;
     }
 
@@ -101,11 +108,13 @@ class FilamentLanguageSwitcherPlugin implements Plugin
         $currentLanguage = collect($locales)->firstWhere('code', $currentLocale);
         $otherLanguages = $locales;
         $showFlags = $this->showFlags;
+        $showLabel = $this->showLabel;
 
         return view('filament-language-switcher::language-switcher', compact(
             'otherLanguages',
             'currentLanguage',
             'showFlags',
+            'showLabel',
             'floating',
         ));
     }
