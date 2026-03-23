@@ -105,6 +105,24 @@ FilamentLanguageSwitcherPlugin::make()
     ->showOnAuthPages()
 ```
 
+### Flag Mapping
+
+Remap flag icons for specific locales — useful when a language's default flag doesn't match your audience (e.g. show the Swiss flag for German):
+```php
+FilamentLanguageSwitcherPlugin::make()
+    ->flagMapping(['de' => 'ch', 'fr' => 'be'])
+```
+
+Flag codes reference: https://flagicons.lipis.dev
+
+### Show Label
+
+Display the current language name next to the flag in the trigger button:
+```php
+FilamentLanguageSwitcherPlugin::make()
+    ->showLabel()
+```
+
 ### Hide Flags
 
 Display only language names without flag icons:
